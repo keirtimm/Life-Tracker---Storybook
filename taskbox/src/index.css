@@ -13,9 +13,12 @@
     Number scaling is wasteful and unnecessary, and what provides more value is purpose driven token groups (for easy whitelabelling).
     Exhaustive variants will bloat the system so we normalize the sets, and document how to use the groups.
     Naming trips up many token system engineers, so we will use abbreviations only for fairly redundant organizational key segments, leaf keys will need to be full.
-    FIGMA Modes will require tokens carry their mode in their token
+    FIGMA Modes will require tokens carry their mode in their token key, 
+    Mapping tier tokens MUST ONLY reference Definition tokens (no one off values).
 
+    ---------------------------------------------------------------------------------------------------
     Definition Groupings (def. these should only be referenced by mapping variables):
+    ---------------------------------------------------------------------------------------------------
     - 12x Palettes (Main, Support, Emphasis, Dull, Back, Fore, Done, Stop, Help, Warn, Must, Focus)
     - Gaps (paragraphOuter, afterHeading, input, label, splitter, actions)
     - Corners (Dialogs, Popups, Tooltips, Actions, Inputs, ...)
@@ -28,12 +31,30 @@
     - fontSize
     - fontFamily
     - fontWeight
-    - textDecoration
+    - (textDecoration will be for strikethrough and underlines)
     - (font-style is only really italic for now)
     - (letter-spacing matters more in headings)
     - (line height only matters when wrapping text)
     - (text-transform will impact readability)
 
+    Order matters for CSS Variables so the Mapping tier will be underneath the Definition tier.
+
+    ---------------------------------------------------------------------------------------------------
+    Mapping Groupings (map. these must only reference def. tier tokens and not have any custom values):
+    ---------------------------------------------------------------------------------------------------
+    I will keep these as simple as possible for now, this is a normalized (minimum redundancy) set of groupings.
+    These groups are re-useable across multiple components and reflect brand rules.
+    We also want the group attributes to correspond as closely to CSS values to reduce cognitive load.
+    - ColorGroup (backgroundColor, color, borderColor)
+    - FontGroup (fontFamily, fontSize, fontWeight, ...)
+    - PanelGroup (borderRadius, sidePadding, verticalPadding, ... )
+    - borderGroup (borderWidth, gap, borderColor) <- radius comes from panelGroup
+
+    Its worth considering how Tailwind optimizes by "tree-shaking" out unnecessary styles during pre-compilation.
+    We don't have that implemented here but could make that a future goal to filter variables by used components.
+
+    To test the accessibility of the color choices, we will need to create a page containing all our brand color groups.
+    These will build up slowly and all be tested. Changes to the branding will happen depending on the results.
   */
 
   /* Burgeoning Token System */
